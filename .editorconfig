@@ -1,5 +1,6 @@
 ﻿[*.cs]
 
-# IDE0290: Use primary constructor
+max_line_length = 120
 csharp_style_prefer_primary_constructors = false
 csharp_sort_usings_with_system_first = false
+csharp_style_namespace_declarations = file_scoped:warning
