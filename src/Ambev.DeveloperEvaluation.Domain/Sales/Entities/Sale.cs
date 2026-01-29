@@ -10,6 +10,7 @@ public class Sale : BaseEntity
     public required Guid BranchId { get; init; }
 
     public List<SaleItem> Items { get; init; } = [];
+    public List<Discount> Discounts { get; init; } = [];
 
     public bool IsCancelled { get; set; }
     public required DateTime CreatedAt { get; init; }
