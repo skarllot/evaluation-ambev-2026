@@ -10,7 +10,7 @@ public static class SaleItemValidator
     public static IValidator<SaleItem> Rules { get; } =
         new InlineValidator<SaleItem>
         {
-            r => r.RuleFor(si => si.ProductId).NotEmpty().WithMessage("Product must be specified."),
+            r => r.RuleFor(si => si.ProductId).NotEmpty().WithMessage("Product is required."),
             r => r.RuleFor(si => si.Quantity).SetValidator(ProductQuantityValidator.Rules),
             r => r.RuleFor(si => si.UnitPrice).SetValidator(ProductPriceValidator.Rules),
         };
