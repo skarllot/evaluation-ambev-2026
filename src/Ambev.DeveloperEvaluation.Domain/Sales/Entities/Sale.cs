@@ -4,7 +4,7 @@ namespace Ambev.DeveloperEvaluation.Domain.Sales.Entities;
 
 public class Sale : BaseEntity
 {
-    public required long Number { get; set; }
+    public long Number { get; init; }
 
     public required Guid CustomerId { get; init; }
     public required Guid BranchId { get; init; }
