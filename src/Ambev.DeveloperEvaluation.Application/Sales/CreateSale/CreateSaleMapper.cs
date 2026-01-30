@@ -6,18 +6,13 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
 public static class CreateSaleMapper
 {
-    public static Sale ToSaleEntity(
-        this CreateSaleCommand command,
-        Dictionary<Guid, Discount> discounts,
-        DateTimeOffset timestamp
-    )
+    public static Sale ToSaleEntity(this CreateSaleCommand command, DateTimeOffset timestamp)
     {
         return new Sale
         {
             CustomerId = command.CustomerId,
             BranchId = command.BranchId,
             Items = command.Items.Select(ToSaleItemEntity).ToList(),
-            Discounts = command.Discounts.Select(v => discounts[v]).ToList(),
             IsCancelled = false,
             CreatedAt = timestamp.UtcDateTime,
         };

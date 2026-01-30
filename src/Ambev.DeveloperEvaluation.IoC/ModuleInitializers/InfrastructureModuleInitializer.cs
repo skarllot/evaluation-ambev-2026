@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Users.Repositories;
+﻿using Ambev.DeveloperEvaluation.Domain.Sales.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Users.Repositories;
 using Ambev.DeveloperEvaluation.ORM;
 using Ambev.DeveloperEvaluation.ORM.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -13,5 +14,7 @@ public class InfrastructureModuleInitializer : IModuleInitializer
     {
         builder.Services.AddScoped<DbContext>(provider => provider.GetRequiredService<DefaultContext>());
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
+        builder.Services.AddScoped<ISaleRepository, SaleRepository>();
     }
 }

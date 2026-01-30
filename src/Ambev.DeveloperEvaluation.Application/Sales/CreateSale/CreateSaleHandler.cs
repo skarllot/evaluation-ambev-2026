@@ -1,12 +1,16 @@
 using Ambev.DeveloperEvaluation.Domain.Sales.Repositories;
-using AutoMapper;
+using Ambev.DeveloperEvaluation.Domain.Sales.Services;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
-public class CreateSaleHandler(IMapper mapper, IDiscountRepository discountRepository, ISaleRepository saleRepository)
-    : IRequestHandler<CreateSaleCommand, CreateSaleResult>
+public class CreateSaleHandler(
+    ILogger<CreateSaleHandler> logger,
+    ISaleDiscountService discountService,
+    ISaleRepository saleRepository
+) : IRequestHandler<CreateSaleCommand, CreateSaleResult>
 {
     public async Task<CreateSaleResult> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
     {
@@ -17,14 +21,13 @@ public class CreateSaleHandler(IMapper mapper, IDiscountRepository discountRepos
         }
 
         var now = DateTimeOffset.UtcNow;
-        var discounts = await discountRepository
-            .GetDiscounts(request.Discounts, cancellationToken)
-            .ToDictionaryAsync(x => x.Id, cancellationToken: cancellationToken);
 
-        var sale = request.ToSaleEntity(discounts, now);
+        var sale = request.ToSaleEntity(now);
+        await discountService.ApplyDiscounts(sale, request.Discounts, cancellationToken);
 
         await saleRepository.Create(sale, cancellationToken);
 
+        logger.LogInformation("New sale created: {SaleId}", sale.Id);
         return new CreateSaleResult { Id = sale.Id };
     }
 }
