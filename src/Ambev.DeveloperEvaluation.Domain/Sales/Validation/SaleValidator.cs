@@ -1,4 +1,3 @@
-using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Sales.Entities;
 using FluentValidation;
 
@@ -28,5 +27,5 @@ public static class SaleValidator
                     .WithMessage("Each discount can only be applied once per sale."),
         };
 
-    public static ValidationResultDetail Validate(this Sale sale) => new(Rules.Validate(sale));
+    public static void ValidateAndThrow(this Sale sale) => Rules.ValidateAndThrow(sale);
 }

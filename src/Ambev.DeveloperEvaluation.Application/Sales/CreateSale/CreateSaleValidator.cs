@@ -1,5 +1,4 @@
 using FluentValidation;
-using FluentValidation.Results;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
@@ -21,5 +20,5 @@ public static class CreateSaleValidator
             r => r.RuleForEach(c => c.Discounts).NotEmpty(),
         };
 
-    public static ValidationResult Validate(this CreateSaleCommand command) => Rules.Validate(command);
+    public static void ValidateAndThrow(this CreateSaleCommand command) => Rules.ValidateAndThrow(command);
 }
