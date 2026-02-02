@@ -1,4 +1,3 @@
-using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Sales.Entities;
 using FluentValidation;
 
@@ -12,7 +11,7 @@ public static class DiscountValidator
             r => r.RuleFor(si => si.Code).SetValidator(DiscountCodeValidator.Rules),
             r =>
                 r.RuleFor(si => si)
-                    .Must(si => si.Multiplier.HasValue || si.Amount.HasValue)
+                    .Must(si => si.Multiplier.HasValue ^ si.Amount.HasValue)
                     .WithMessage("Discount must specify either a percentage multiplier or a fixed amount value."),
             r =>
                 r.RuleFor(si => si.Multiplier)
@@ -36,5 +35,5 @@ public static class DiscountValidator
                     .When(si => si.Multiplier is null),
         };
 
-    public static ValidationResultDetail Validate(this Discount discount) => new(Rules.Validate(discount));
+    public static void ValidateAndThrow(this Discount discount) => Rules.ValidateAndThrow(discount);
 }

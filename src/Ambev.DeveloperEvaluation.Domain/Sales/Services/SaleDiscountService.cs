@@ -5,11 +5,13 @@ using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Sales.Services;
 
+/// <inheritdoc />
 public class SaleDiscountService(
     IDiscountRepository discountRepository,
     IEnumerable<IAutomaticDiscount> automaticDiscounts
 ) : ISaleDiscountService
 {
+    /// <inheritdoc />
     public async Task ApplyDiscounts(Sale sale, IImmutableList<Guid> discountIds, CancellationToken cancellationToken)
     {
         var discounts = await discountRepository

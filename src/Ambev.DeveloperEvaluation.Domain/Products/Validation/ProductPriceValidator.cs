@@ -1,4 +1,3 @@
-using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Products.ValueObjects;
 using FluentValidation;
 
@@ -19,5 +18,5 @@ public static class ProductPriceValidator
                     .WithMessage("Product price cannot have more than 2 decimal places."),
         };
 
-    public static ValidationResultDetail Validate(this ProductPrice productPrice) => new(Rules.Validate(productPrice));
+    public static void ValidateAndThrow(this ProductPrice productPrice) => Rules.ValidateAndThrow(productPrice);
 }

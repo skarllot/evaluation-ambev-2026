@@ -10,8 +10,8 @@ public static class SaleValidator
         {
             r =>
                 r.RuleFor(s => s.Number)
-                    .GreaterThan(0)
-                    .WithMessage("Sale number must be an integer greater than zero."),
+                    .GreaterThanOrEqualTo(0)
+                    .WithMessage("Sale number must be a non-negative integer."),
             r => r.RuleFor(s => s.CustomerId).NotEmpty().WithMessage("Customer is required."),
             r => r.RuleFor(s => s.BranchId).NotEmpty().WithMessage("Branch is required."),
             r => r.RuleForEach(s => s.Items).SetValidator(SaleItemValidator.Rules),

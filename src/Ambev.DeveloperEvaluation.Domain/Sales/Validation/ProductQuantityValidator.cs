@@ -1,4 +1,3 @@
-using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Sales.ValueObjects;
 using FluentValidation;
 
@@ -17,6 +16,6 @@ public static class ProductQuantityValidator
                     .WithMessage("Product quantity must be less than or equal to 20."),
         };
 
-    public static ValidationResultDetail Validate(this ProductQuantity productQuantity) =>
-        new(Rules.Validate(productQuantity));
+    public static void ValidateAndThrow(this ProductQuantity productQuantity) =>
+        Rules.ValidateAndThrow(productQuantity);
 }

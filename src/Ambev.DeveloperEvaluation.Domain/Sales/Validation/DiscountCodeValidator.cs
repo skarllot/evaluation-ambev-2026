@@ -1,4 +1,3 @@
-using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Sales.ValueObjects;
 using FluentValidation;
 
@@ -12,5 +11,5 @@ public static class DiscountCodeValidator
             r => r.RuleFor(q => q.Value).NotEmpty().WithMessage("The discount code must not be empty."),
         };
 
-    public static ValidationResultDetail Validate(this DiscountCode discountCode) => new(Rules.Validate(discountCode));
+    public static void ValidateAndThrow(this DiscountCode discountCode) => Rules.ValidateAndThrow(discountCode);
 }

@@ -9,6 +9,7 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
 public class CreateSaleHandler(
     ILogger<CreateSaleHandler> logger,
+    TimeProvider timeProvider,
     ISaleDiscountService discountService,
     ISaleRepository saleRepository,
     IPublisher publisher
@@ -18,7 +19,7 @@ public class CreateSaleHandler(
     {
         request.ValidateAndThrow();
 
-        var now = DateTimeOffset.UtcNow;
+        var now = timeProvider.GetUtcNow();
 
         var sale = request.ToSaleEntity(now);
         await discountService.ApplyDiscounts(sale, request.Discounts, cancellationToken);

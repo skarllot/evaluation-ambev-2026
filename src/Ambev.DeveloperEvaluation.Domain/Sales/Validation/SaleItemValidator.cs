@@ -1,4 +1,3 @@
-using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Products.Validation;
 using Ambev.DeveloperEvaluation.Domain.Sales.Entities;
 using FluentValidation;
@@ -15,5 +14,5 @@ public static class SaleItemValidator
             r => r.RuleFor(si => si.UnitPrice).SetValidator(ProductPriceValidator.Rules),
         };
 
-    public static ValidationResultDetail Validate(this SaleItem saleItem) => new(Rules.Validate(saleItem));
+    public static void ValidateAndThrow(this SaleItem saleItem) => Rules.ValidateAndThrow(saleItem);
 }

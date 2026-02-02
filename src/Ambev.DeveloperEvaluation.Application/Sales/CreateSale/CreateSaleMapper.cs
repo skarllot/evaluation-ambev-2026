@@ -12,19 +12,19 @@ public static class CreateSaleMapper
         {
             CustomerId = command.CustomerId,
             BranchId = command.BranchId,
-            Items = command.Items.Select(ToSaleItemEntity).ToList(),
+            Items = command.Items.GroupBy(i => i.ProductId).Select(ToSaleItemEntity).ToList(),
             IsCancelled = false,
             CreatedAt = timestamp.UtcDateTime,
         };
     }
 
-    private static SaleItem ToSaleItemEntity(this CreateSaleItem command)
+    private static SaleItem ToSaleItemEntity(this IGrouping<Guid, CreateSaleItem> items)
     {
         return new SaleItem
         {
-            ProductId = command.ProductId,
-            Quantity = new ProductQuantity(command.Quantity),
-            UnitPrice = new ProductPrice(command.UnitPrice),
+            ProductId = items.Key,
+            Quantity = new ProductQuantity(items.Sum(i => i.Quantity)),
+            UnitPrice = new ProductPrice(items.Sum(i => i.UnitPrice)),
         };
     }
 }
