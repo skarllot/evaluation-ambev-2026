@@ -3,6 +3,7 @@ using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales;
@@ -12,9 +13,10 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales;
 public class SalesController(IMapper mapper, IMediator mediator) : BaseController
 {
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateSaleRequest request)
+    public async Task<IActionResult> CreateSale([FromBody] CreateSaleRequest request)
     {
         var validationResult = request.Validate();
         if (!validationResult.IsValid)
@@ -22,8 +24,7 @@ public class SalesController(IMapper mapper, IMediator mediator) : BaseControlle
             BadRequest(new ApiResponse(validationResult));
         }
 
-        // TODO: Get user from authentication
-        var command = mapper.Map<CreateSaleCommand>(request);
+        var command = mapper.Map<CreateSaleCommand>(request) with { CustomerId = GetCurrentUserId() };
         var result = await mediator.Send(command);
 
         return Created(
