@@ -1,6 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Sales.Repositories;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.GetUserSales;
+using Ambev.DeveloperEvaluation.Domain.Sales.Repositories;
 using Ambev.DeveloperEvaluation.Domain.Users.Repositories;
 using Ambev.DeveloperEvaluation.ORM;
+using Ambev.DeveloperEvaluation.ORM.Queries;
 using Ambev.DeveloperEvaluation.ORM.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -17,5 +19,6 @@ public class InfrastructureModuleInitializer : IModuleInitializer
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
         builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+        builder.Services.AddScoped<IGetUserSalesQuery, GetUserSalesQuery>();
     }
 }

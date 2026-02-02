@@ -5,7 +5,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 
 public class CreateSaleProfile : Profile
 {
-    protected CreateSaleProfile()
+    public CreateSaleProfile()
     {
         CreateMap<CreateSaleRequest, CreateSaleCommand>();
     }
